@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Grades Management Portal</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar Overlay (Mobile) -->
+        <div class="sidebar-overlay"></div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Grades Portal</span>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-category">Main Menu</div>
+
+                <a href="admin/dashboard-admin.html" class="menu-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <div class="menu-category">Management</div>
+
+                <a href="admin/manage-students.html" class="menu-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Students</span>
+                </a>
+
+                <a href="admin/manage-teachers.html" class="menu-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Teachers</span>
+                </a>
+
+                <a href="admin/manage-classes.html" class="menu-item">
+                    <i class="fas fa-book"></i>
+                    <span>Classes & Subjects</span>
+                </a>
+
+                <div class="menu-category">Settings</div>
+
+                <a href="profile.html" class="menu-item active">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Profile</span>
+                </a>
+
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+
+                <a href="auth/login.html" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <nav class="top-navbar">
+                <div class="navbar-left">
+                    <button class="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="admin/dashboard-admin.html">Home</a></li>
+                            <li class="breadcrumb-item active">Profile</li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <div class="navbar-right">
+                    <div class="nav-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge bg-danger">3</span>
+                    </div>
+                    <div class="user-menu" data-bs-toggle="dropdown">
+                        <div class="user-avatar">A</div>
+                        <div class="user-info">
+                            <div class="user-name">Admin User</div>
+                            <div class="user-role">Administrator</div>
+                        </div>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="auth/login.html"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">My Profile</h1>
+                    <p class="page-subtitle">Manage your account settings and preferences</p>
+                </div>
+
+                <!-- Success/Error Alerts -->
+                <div class="alert alert-success alert-dismissible fade show" id="successAlert" style="display: none;">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span id="successMessage">Profile updated successfully!</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div class="alert alert-danger alert-dismissible fade show" id="errorAlert" style="display: none;">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <span id="errorMessage">Error updating profile.</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <!-- Profile Header Card -->
+                <div class="profile-header">
+                    <div class="profile-avatar-large">A</div>
+                    <div class="profile-info">
+                        <h3 class="mb-1">Admin User</h3>
+                        <p class="mb-0 opacity-75">Administrator | admin@school.edu</p>
+                        <div class="mt-2">
+                            <span class="badge bg-light text-dark me-2">
+                                <i class="fas fa-shield-alt me-1"></i>Admin
+                            </span>
+                            <span class="badge bg-light text-dark">
+                                <i class="fas fa-check-circle me-1"></i>Active
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ms-auto">
+                        <button class="btn btn-light" onclick="document.getElementById('uploadPhoto').click()">
+                            <i class="fas fa-camera me-2"></i>Change Photo
+                        </button>
+                        <input type="file" id="uploadPhoto" style="display: none;" accept="image/*">
+                    </div>
+                </div>
+
+                <!-- Profile Tabs -->
+                <div class="row g-4">
+                    <div class="col-lg-4">
+                        <!-- Profile Summary Card -->
+                        <div class="content-card">
+                            <div class="content-card-body text-center py-4">
+                                <div class="user-avatar mx-auto mb-3" style="width: 120px; height: 120px; font-size: 48px;">A</div>
+                                <h5 class="mb-1">Admin User</h5>
+                                <p class="text-muted mb-3">Administrator</p>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-primary" onclick="showTab('editProfile')">
+                                        <i class="fas fa-edit me-2"></i>Edit Profile
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="showTab('changePassword')">
+                                        <i class="fas fa-lock me-2"></i>Change Password
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="content-card-footer bg-light p-3">
+                                <div class="row text-center">
+                                    <div class="col-4 border-end">
+                                        <div class="text-muted small">Member Since</div>
+                                        <div class="fw-bold">2023</div>
+                                    </div>
+                                    <div class="col-4 border-end">
+                                        <div class="text-muted small">Last Login</div>
+                                        <div class="fw-bold">Today</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-muted small">Role</div>
+                                        <div class="fw-bold">Admin</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div class="content-card mt-4">
+                            <div class="content-card-header">
+                                <h5 class="content-card-title"><i class="fas fa-link me-2"></i>Quick Links</h5>
+                            </div>
+                            <div class="content-card-body">
+                                <div class="list-group list-group-flush">
+                                    <a href="settings.html" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-cog me-2 text-muted"></i>Account Settings</span>
+                                        <i class="fas fa-chevron-right small"></i>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-bell me-2 text-muted"></i>Notification Preferences</span>
+                                        <i class="fas fa-chevron-right small"></i>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-history me-2 text-muted"></i>Login History</span>
+                                        <i class="fas fa-chevron-right small"></i>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-shield-alt me-2 text-muted"></i>Security Settings</span>
+                                        <i class="fas fa-chevron-right small"></i>
+                                    </a>
+                                    <a href="auth/login.html" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-danger">
+                                        <span><i class="fas fa-sign-out-alt me-2"></i>Logout</span>
+                                        <i class="fas fa-chevron-right small"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <!-- Edit Profile Form -->
+                        <div class="content-card" id="editProfileCard">
+                            <div class="content-card-header">
+                                <h5 class="content-card-title"><i class="fas fa-user-edit me-2"></i>Edit Profile Information</h5>
+                            </div>
+                            <div class="content-card-body">
+                                <form id="profileForm">
+                                    <h6 class="border-bottom pb-2 mb-3">Personal Information</h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">First Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" value="Admin" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" value="User" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control" value="admin@school.edu" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" value="+1 (555) 000-0000">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Date of Birth</label>
+                                            <input type="date" class="form-control" value="1985-01-15">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Gender</label>
+                                            <select class="form-select">
+                                                <option value="">Select</option>
+                                                <option value="male" selected>Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Address</label>
+                                            <textarea class="form-control" rows="2">123 School Street, Education City, ST 12345</textarea>
+                                        </div>
+                                    </div>
+
+                                    <h6 class="border-bottom pb-2 mb-3 mt-4">Professional Information</h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Department</label>
+                                            <select class="form-select">
+                                                <option value="admin" selected>Administration</option>
+                                                <option value="teaching">Teaching</option>
+                                                <option value="support">Support Staff</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Position/Title</label>
+                                            <input type="text" class="form-control" value="System Administrator">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Employee ID</label>
+                                            <input type="text" class="form-control" value="EMP-001" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Hire Date</label>
+                                            <input type="date" class="form-control" value="2023-01-01">
+                                        </div>
+                                    </div>
+
+                                    <h6 class="border-bottom pb-2 mb-3 mt-4">Preferences</h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Language</label>
+                                            <select class="form-select">
+                                                <option value="en" selected>English</option>
+                                                <option value="es">Spanish</option>
+                                                <option value="fr">French</option>
+                                                <option value="de">German</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Timezone</label>
+                                            <select class="form-select">
+                                                <option value="EST" selected>Eastern Time (EST)</option>
+                                                <option value="CST">Central Time (CST)</option>
+                                                <option value="MST">Mountain Time (MST)</option>
+                                                <option value="PST">Pacific Time (PST)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="emailNotif" checked>
+                                                <label class="form-check-label" for="emailNotif">
+                                                    Receive email notifications
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="darkMode">
+                                                <label class="form-check-label" for="darkMode">
+                                                    Dark mode (coming soon)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-end gap-2 mt-4">
+                                        <button type="button" class="btn btn-secondary">
+                                            <i class="fas fa-times me-2"></i>Cancel
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save me-2"></i>Save Changes
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Change Password Form (Hidden by default) -->
+                        <div class="content-card" id="changePasswordCard" style="display: none;">
+                            <div class="content-card-header">
+                                <h5 class="content-card-title"><i class="fas fa-lock me-2"></i>Change Password</h5>
+                            </div>
+                            <div class="content-card-body">
+                                <form id="passwordForm">
+                                    <div class="alert alert-info mb-4">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Password Requirements:</strong>
+                                        <ul class="mb-0 mt-2">
+                                            <li>At least 8 characters long</li>
+                                            <li>Contains at least one uppercase letter</li>
+                                            <li>Contains at least one lowercase letter</li>
+                                            <li>Contains at least one number</li>
+                                            <li>Contains at least one special character</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Current Password <span class="text-danger">*</span></label>
+                                        <div class="password-wrapper">
+                                            <input type="password" class="form-control" id="currentPassword" required>
+                                            <button type="button" class="password-toggle">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">New Password <span class="text-danger">*</span></label>
+                                        <div class="password-wrapper">
+                                            <input type="password" class="form-control" id="newPassword" required>
+                                            <button type="button" class="password-toggle">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-text">Must be different from your current password</div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label">Confirm New Password <span class="text-danger">*</span></label>
+                                        <div class="password-wrapper">
+                                            <input type="password" class="form-control" id="confirmPassword" required>
+                                            <button type="button" class="password-toggle">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div id="passwordMatch" class="form-text"></div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <button type="button" class="btn btn-secondary" onclick="showTab('editProfile')">
+                                            <i class="fas fa-times me-2"></i>Cancel
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-key me-2"></i>Update Password
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Account Activity -->
+                        <div class="content-card mt-4">
+                            <div class="content-card-header">
+                                <h5 class="content-card-title"><i class="fas fa-history me-2"></i>Recent Activity</h5>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                            </div>
+                            <div class="content-card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Activity</th>
+                                                <th>IP Address</th>
+                                                <th>Device</th>
+                                                <th>Date/Time</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><i class="fas fa-sign-in-alt text-success me-2"></i>Login</td>
+                                                <td>192.168.1.100</td>
+                                                <td>Chrome on Windows</td>
+                                                <td>Apr 12, 2026 8:30 AM</td>
+                                                <td><span class="badge badge-soft badge-soft-success">Success</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-edit text-primary me-2"></i>Profile Updated</td>
+                                                <td>192.168.1.100</td>
+                                                <td>Chrome on Windows</td>
+                                                <td>Apr 11, 2026 3:45 PM</td>
+                                                <td><span class="badge badge-soft badge-soft-success">Success</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-sign-in-alt text-success me-2"></i>Login</td>
+                                                <td>192.168.1.100</td>
+                                                <td>Chrome on Windows</td>
+                                                <td>Apr 11, 2026 8:15 AM</td>
+                                                <td><span class="badge badge-soft badge-soft-success">Success</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-key text-warning me-2"></i>Password Changed</td>
+                                                <td>192.168.1.100</td>
+                                                <td>Chrome on Windows</td>
+                                                <td>Apr 10, 2026 2:00 PM</td>
+                                                <td><span class="badge badge-soft badge-soft-success">Success</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-sign-in-alt text-danger me-2"></i>Login Attempt</td>
+                                                <td>192.168.1.50</td>
+                                                <td>Unknown Device</td>
+                                                <td>Apr 9, 2026 11:30 PM</td>
+                                                <td><span class="badge badge-soft badge-soft-danger">Failed</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Two-Factor Authentication -->
+                        <div class="content-card mt-4">
+                            <div class="content-card-header">
+                                <h5 class="content-card-title"><i class="fas fa-shield-alt me-2"></i>Security Settings</h5>
+                            </div>
+                            <div class="content-card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                                    <div>
+                                        <h6 class="mb-1">Two-Factor Authentication</h6>
+                                        <p class="text-muted small mb-0">Add an extra layer of security to your account</p>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="twoFactor">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                                    <div>
+                                        <h6 class="mb-1">Login Notifications</h6>
+                                        <p class="text-muted small mb-0">Get notified when someone logs into your account</p>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="loginNotif" checked>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">Session Timeout</h6>
+                                        <p class="text-muted small mb-0">Automatically logout after period of inactivity</p>
+                                    </div>
+                                    <select class="form-select" style="width: auto;">
+                                        <option value="15">15 minutes</option>
+                                        <option value="30" selected>30 minutes</option>
+                                        <option value="60">1 hour</option>
+                                        <option value="120">2 hours</option>
+                                        <option value="0">Never</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="../js/main.js"></script>
+    <script>
+    // Load user info from sessionStorage (set during login)
+    document.addEventListener('DOMContentLoaded', function() {
+        const storedUser = sessionStorage.getItem('user');
+        if (storedUser) {
+            const user = JSON.parse(storedUser);
+            document.querySelector('.user-name').textContent = user.name;
+            document.querySelector('.user-role').textContent = user.role === 'admin' ? 'Administrator' : user.role;
+            document.querySelector('.user-avatar').textContent = user.name.charAt(0);
+        }
+    });
+
+    // Show specific tab/section
+    function showTab(tabName) {
+            if (tabName === 'editProfile') {
+                document.getElementById('editProfileCard').style.display = 'block';
+                document.getElementById('changePasswordCard').style.display = 'none';
+            } else if (tabName === 'changePassword') {
+                document.getElementById('editProfileCard').style.display = 'none';
+                document.getElementById('changePasswordCard').style.display = 'block';
+            }
+        }
+
+        // Password match validation
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = this.value;
+            const matchText = document.getElementById('passwordMatch');
+
+            if (confirmPassword && newPassword !== confirmPassword) {
+                matchText.textContent = 'Passwords do not match';
+                matchText.className = 'text-danger';
+            } else if (confirmPassword) {
+                matchText.textContent = 'Passwords match';
+                matchText.className = 'text-success';
+            } else {
+                matchText.textContent = '';
+            }
+        });
+
+        // Profile form submission
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Hide any existing alerts
+            document.getElementById('successAlert').style.display = 'none';
+            document.getElementById('errorAlert').style.display = 'none';
+
+            // Simulate form submission
+            setTimeout(() => {
+                document.getElementById('successMessage').textContent = 'Profile updated successfully!';
+                document.getElementById('successAlert').style.display = 'block';
+
+                // Scroll to top to show alert
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('successAlert').style.display = 'none';
+                }, 5000);
+            }, 500);
+        });
+
+        // Password form submission
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validate passwords match
+            if (newPassword !== confirmPassword) {
+                document.getElementById('errorMessage').textContent = 'Passwords do not match!';
+                document.getElementById('errorAlert').style.display = 'block';
+                return;
+            }
+
+            // Validate password strength (simple check)
+            if (newPassword.length < 8) {
+                document.getElementById('errorMessage').textContent = 'Password must be at least 8 characters long!';
+                document.getElementById('errorAlert').style.display = 'block';
+                return;
+            }
+
+            // Hide any existing alerts
+            document.getElementById('successAlert').style.display = 'none';
+            document.getElementById('errorAlert').style.display = 'none';
+
+            // Simulate form submission
+            setTimeout(() => {
+                document.getElementById('successMessage').textContent = 'Password changed successfully!';
+                document.getElementById('successAlert').style.display = 'block';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Clear form
+                this.reset();
+                document.getElementById('passwordMatch').textContent = '';
+
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('successAlert').style.display = 'none';
+                }, 5000);
+            }, 500);
+        });
+
+        // Photo upload handler
+        document.getElementById('uploadPhoto').addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // In real implementation, this would upload to server
+                    document.querySelectorAll('.user-avatar, .profile-avatar-large').forEach(el => {
+                        el.style.backgroundImage = `url(${e.target.result})`;
+                        el.style.backgroundSize = 'cover';
+                        el.textContent = '';
+                    });
+
+                    document.getElementById('successMessage').textContent = 'Profile photo updated successfully!';
+                    document.getElementById('successAlert').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('successAlert').style.display = 'none';
+                    }, 5000);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Two-factor toggle handler
+        document.getElementById('twoFactor').addEventListener('change', function() {
+            if (this.checked) {
+                alert('Two-Factor Authentication setup would begin here. In a real implementation, this would guide you through setting up an authenticator app.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Local environment files
+.DS_Store
+Thumbs.db
+
+# XAMPP/PHP specific
+error_log
+php_errors.log
+
+# Database exports (optional - usually better to keep schema separate)
+*.sql.gz
+*.log
